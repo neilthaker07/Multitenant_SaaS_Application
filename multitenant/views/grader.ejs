@@ -1,0 +1,31 @@
+<h1>Welocome Grader <%= grader %></h1>
+
+<h2>Select Tenant</h2>
+
+<form action="/tenant" method = "post">
+    <input type="radio" name="tenant" value="Bhakti" required> Bhakti<br>
+    <input type="radio" name="tenant" value="Shuzhong"> Shuzhong<br>
+    <input type="radio" name="tenant" value="Sequence"> Sequence<br>
+    <input type="radio" name="tenant" value="UML"> UML<br>
+
+    Choose zip file : <input type="file" name="datafile" size="40" required="true">
+
+    <button type = "submit" id="driver"> Get Diagram </button>
+
+</form>
+
+<div id="stage">
+    <h3> <%= graderOrTenant %> </h3>
+    <img src="uml-parser-test1.png" height="42" width="42">
+</div>
+
+<script type = "text/javascript"
+        src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script type = "text/javascript" language = "javascript">
+    $(document).ready(function() {
+        $("#driver").click(function(event){
+            $('#stage').load('uml-parser-test1.png');
+        });
+    });
+</script>
