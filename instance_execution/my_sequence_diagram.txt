@@ -1,0 +1,57 @@
+@startuml
+class ConcreteObserver
+class ConcreteSubject
+interface Observer
+class Optimist
+class Pessimist
+interface Subject
+class TheEconomy
+ConcreteObserver<|--Observer
+
+ConcreteSubject<|--Subject
+
+
+Optimist<|--ConcreteObserver
+
+Pessimist<|--ConcreteObserver
+
+
+TheEconomy<|--ConcreteSubject
+
+class ConcreteObserver{
+
+
++ publicConcreteObserver(ConcreteSubjecttheSubject){this.subject=theSubject}
++ update()
++ showState()
+}
+class ConcreteSubject{
+- private String subjectState 
+- private Collection<Observer> observers = new ArrayList<Observer>() 
++ getState()
++ setState(String status)
++ attach(Observer obj)
++ detach(Observer obj)
++ notifyObservers()
++ showState()
+}
+interface Observer{
++ update()
+}
+class Optimist{
++ publicOptimist(ConcreteSubjectsub){super(sub)}
++ update()
+}
+class Pessimist{
++ publicPessimist(ConcreteSubjectsub){super(sub)}
++ update()
+}
+interface Subject{
++ attach(Observer obj)
++ detach(Observer obj)
++ notifyObservers()
+}
+class TheEconomy{
++ publicTheEconomy(){super.setState("ThePriceofgasisat$5.00/gal")}
+}
+@enduml

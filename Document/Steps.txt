@@ -1,0 +1,8 @@
+Start mongo db service
+sudo service mongod start
+
+Go to mongodb to start client
+run : ./mongo
+
+Go to node js : bin/www
+run : npm start

@@ -1,4 +1,15 @@
 #Path in ec2 instance: /home/ec2-user
+
+from pyVim.connect import SmartConnect
+
+ 
+c = SmartConnect(host="52.52.67.116", user="ec2-user", pwd='')
+ 
+print(c.CurrentTime())
+
+'''
+
+
 import subprocess
 import sys
 
@@ -10,7 +21,7 @@ COMMAND="uname -a"
 
 
 # Ports are handled in ~/.ssh/config since we use OpenSSH
-ssh = subprocess.Popen(["ssh -i cmpe281-us-west-1.pem ec2-user@52.52.67.116"],
+ssh = subprocess.Popen(["ssh", "%s" % HOST, COMMAND],
                        shell=False,
                        stdout=subprocess.PIPE,
                        stderr=subprocess.PIPE)
@@ -20,3 +31,4 @@ if result == []:
     print >>sys.stderr, "ERROR: %s" % error
 else:
     print result
+'''
