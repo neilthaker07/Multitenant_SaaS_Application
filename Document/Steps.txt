@@ -1,3 +1,9 @@
+Tenants:
+Bhakti Shah
+Shuzhong Chen
+Sequence option
+UML Graph option
+
 Start mongo db service
 sudo service mongod start
 
