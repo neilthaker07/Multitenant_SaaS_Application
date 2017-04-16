@@ -1,32 +1,125 @@
-
 <h1>Welcome Grader <%= grader %></h1>
+<h2>Select Tenant</h2>                             <!-- required left-->
+<form action="/login" method = "post">
+    <input type="radio" name="tenant" value="Bhakti" id="rb1" required> Bhakti<br>
+    <input type="radio" name="tenant" value="Shuzhong" id="rb2"> Shuzhong<br>
+    <input type="radio" name="tenant" value="Sequence" id="rb3"> Sequence<br>
+    <input type="radio" name="tenant" value="UML Graph" id="rb4"> UML<br>
+    <br>
 
-<h2>Select Tenant</h2>
+    <div id="fileUpload" style="display:none">Choose zip file
+        <button class="btn btn-lg upload-btn" style="display:none" type="button">Upload File</button>
+        <input id="upload-input" type="file"  name="uploads[]" multiple="multiple"></div>
 
-    <input type="radio" name="tenant" value="Bhakti" required> Bhakti<br>
-    <input type="radio" name="tenant" value="Shuzhong"> Shuzhong<br>
-    <input type="radio" name="tenant" value="Sequence"> Sequence<br>
-    <input type="radio" name="tenant" value="UML"> UML<br>
+    <div id="coding" style="display:none">Insert code<br/>
+        <textarea rows="25" cols="50"></textarea></div>
 
-    Choose zip file : <input type="file" name="datafile" size="40" required="true">
-
-    <button type = "submit" id="driver"> Get Diagram </button>
+    <br><button type = "submit" id="diagramButton"> Get Diagram </button>
 
 
 <h3> Output Diagram </h3>
+<div id="diagram" style="display:none"> <img src="../public/images/outputDiagram.png"></div>
+</form>
 
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <script type = "text/javascript"
-        src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-<script type = "text/javascript" language = "javascript">
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script>
     $(document).ready(function(){
-        $('#driver').click(function(){
-            instance_script();
-            $('#stage').load('/example.png');
+        $("#rb3").click(function(){
+            $("#fileUpload").hide();
+            $("#coding").show();
+        });
+        $("#rb4").click(function(){
+            $("#fileUpload").hide();
+            $("#coding").show();
+        });
+        $("#rb2").click(function(){
+            $("#fileUpload").show();
+            $("#coding").hide();
+        });
+        $("#rb1").click(function(){
+            $("#fileUpload").show();
+            $("#coding").hide();
+        });
+        $("#diagramButton").click(function(){
+            $("#diagram").show();
         });
     });
+
+   /* $('input[type="file"]').on('change', function () {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var thisImage = reader.result;
+            localStorage.setItem("imgData", thisImage);
+        };
+        reader.readAsDataURL(this.files[0]);
+    });*/
+
+
+    $('.upload-btn').on('click', function (){
+        $('#upload-input').click()
+    });
+
+    $('#upload-input').on('change', function(){
+
+        var files = $(this).get(0).files;
+
+        if (files.length > 0){
+            // create a FormData object which will be sent as the data payload in the
+            // AJAX request
+            var formData = new FormData();
+
+            // loop through all the selected files and add them to the formData object
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+
+                // add the files to formData object for the data payload
+                formData.append('uploads[]', file, file.name);
+            }
+
+            $.ajax({
+                url: '/uploading',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data){
+                    console.log('upload successful!\n' + data);
+                },
+                xhr: function() {
+                    // create an XMLHttpRequest
+                    var xhr = new XMLHttpRequest();
+
+                    // listen to the 'progress' event
+                    xhr.upload.addEventListener('progress', function(evt) {
+
+                    }, false);
+
+                    return xhr;
+                }
+            });
+
+        }
+    });
+
+
+
+    // Instantiate the Shell object and invoke its execute method.
+    var oShell = new ActiveXObject("Shell.Application");
+
+    var commandtoRun = "/home/neil/Neil_Work/MS_SJSU/CT_281/node_personal_project/multitenant-app-281/instance_execution/calling_script.sh";
+    if (inputparms != "") {
+        var commandParms = document.Form1.filename.value;
+    }
+
+    // Invoke the execute method.
+    oShell.ShellExecute(commandtoRun, commandParms, "", "open", "1");
+
+
+
+
+
+
+
 </script>
-
-
-
-
