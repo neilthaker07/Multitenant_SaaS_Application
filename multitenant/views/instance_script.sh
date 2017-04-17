@@ -1,1 +1,0 @@
-java -jar sequence-10.0.jar --headless my_sequence_diagram.txt

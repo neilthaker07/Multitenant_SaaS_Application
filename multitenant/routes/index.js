@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var path = require('path');
 var formidable = require('formidable');
 var fs = require('fs');
+var exec = require('exec');
 
 var userDataSchema = new Schema({
     username: {type: String, required:true},
@@ -18,7 +19,7 @@ var UserData = mongoose.model('UserData', userDataSchema);
 router.get('/', function (req, res, next) {
   res.render('index');
 });
-
+var userGlobal ;
 // login flow for grader
 router.post('/login', function(req, res, next) {
     var username = req.body.username;
@@ -41,7 +42,8 @@ router.post('/login', function(req, res, next) {
 });
 
 router.get('/grader/:username', function (req, res, next) {
-    res.render('grader',{grader: req.params.username});
+    userGlobal = req.params.username;
+    res.render('grader',{grader: req.params.username,filename:""});
 });
 
 
@@ -68,6 +70,8 @@ router.post('/signupForm', function(req,res,next){
     res.redirect('/');
 });
 
+var imageProcess;
+
 // save the uploaded file to the server
 router.post('/uploading', function(req, res) {
 
@@ -84,11 +88,12 @@ router.post('/uploading', function(req, res) {
     // rename it to it's orignal name
     form.on('file', function(field, file) {
         fs.rename(file.path, path.join(form.uploadDir, file.name));
+        imageProcess = file.name;
     });
 
     // log any errors that occur
     form.on('error', function(err) {
-        console.log('An error has occured: \n' + err);
+        console.log('An error has occurred: \n' + err);
     });
 
     // once all the files have been uploaded, send a response to the client
@@ -98,6 +103,25 @@ router.post('/uploading', function(req, res) {
 
     // parse the incoming request containing the form data
     form.parse(req);
+});
+
+// execute uploaded file on instance and get output image
+router.post('/submit2',function (req, res, next) {
+
+    var fileName = imageProcess;
+    var fileWithoutExt = fileName.substring(0, fileName.lastIndexOf('.'));
+    var pngName= fileWithoutExt+".png";
+
+    exec('/home/neil/Neil_Work/MS_SJSU/CT_281/node_personal_project/multitenant-app-281/instance_execution/exe_script.sh /home/neil/Neil_Work/MS_SJSU/CT_281/node_personal_project/multitenant-app-281/multitenant/routes/uploads/'+fileName+' '+fileName+' '+pngName,
+        function (error, stdout, stderr) {
+            if (error !== null) {
+                console.log('exec error: ' + error);
+            }
+
+     res.render('grader', {grader: req.params.username,filename:pngName});
+
+        });
+
 });
 
 module.exports = router;

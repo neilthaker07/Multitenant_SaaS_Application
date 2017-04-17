@@ -1,6 +1,6 @@
 <h1>Welcome Grader <%= grader %></h1>
 <h2>Select Tenant</h2>                             <!-- required left-->
-<form action="/login" method = "post">
+<form action="/submit2" method = "post">
     <input type="radio" name="tenant" value="Bhakti" id="rb1" required> Bhakti<br>
     <input type="radio" name="tenant" value="Shuzhong" id="rb2"> Shuzhong<br>
     <input type="radio" name="tenant" value="Sequence" id="rb3"> Sequence<br>
@@ -16,9 +16,8 @@
 
     <br><button type = "submit" id="diagramButton"> Get Diagram </button>
 
-
 <h3> Output Diagram </h3>
-<div id="diagram" style="display:none"> <img src="../public/images/outputDiagram.png"></div>
+<img src="images/<%=filename%>" style="display:none"/>
 </form>
 
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
@@ -102,24 +101,5 @@
 
         }
     });
-
-
-
-    // Instantiate the Shell object and invoke its execute method.
-    var oShell = new ActiveXObject("Shell.Application");
-
-    var commandtoRun = "/home/neil/Neil_Work/MS_SJSU/CT_281/node_personal_project/multitenant-app-281/instance_execution/calling_script.sh";
-    if (inputparms != "") {
-        var commandParms = document.Form1.filename.value;
-    }
-
-    // Invoke the execute method.
-    oShell.ShellExecute(commandtoRun, commandParms, "", "open", "1");
-
-
-
-
-
-
 
 </script>
