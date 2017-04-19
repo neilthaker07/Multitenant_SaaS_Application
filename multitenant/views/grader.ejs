@@ -1,4 +1,4 @@
-<h1>Welcome Grader <%= grader %></h1>
+<h1>Welcome Grader <%=grader%></h1>
 <h2>Select Tenant</h2>                             <!-- required left-->
 <form action="/submit2" method = "post">
     <input type="radio" name="tenant" value="Bhakti" id="rb1" required> Bhakti<br>
@@ -12,12 +12,13 @@
         <input id="upload-input" type="file"  name="uploads[]" multiple="multiple"></div>
 
     <div id="coding" style="display:none">Insert code<br/>
-        <textarea rows="25" cols="50"></textarea></div>
+        <textarea rows="25" cols="50"></textarea>
+    </div>
 
-    <br><button type = "submit" id="diagramButton"> Get Diagram </button>
+    <br><button type="submit" id="diagramButton" onclick="getTextFun()"> Get Diagram </button>
 
 <h3> Output Diagram </h3>
-<img src="images/<%=filename%>" style="display:none"/>
+<img src="images/<%=filename%>" />
 </form>
 
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
@@ -45,16 +46,6 @@
             $("#diagram").show();
         });
     });
-
-   /* $('input[type="file"]').on('change', function () {
-        var reader = new FileReader();
-        reader.onload = function () {
-            var thisImage = reader.result;
-            localStorage.setItem("imgData", thisImage);
-        };
-        reader.readAsDataURL(this.files[0]);
-    });*/
-
 
     $('.upload-btn').on('click', function (){
         $('#upload-input').click()
@@ -101,5 +92,10 @@
 
         }
     });
+
+    function getTextFun(){
+        var x = document.getElementById("coding").value;
+//        document.getElementById("demo").innerHTML = x;
+    }
 
 </script>

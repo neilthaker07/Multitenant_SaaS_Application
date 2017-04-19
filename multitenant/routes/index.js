@@ -118,7 +118,7 @@ router.post('/submit2',function (req, res, next) {
                 console.log('exec error: ' + error);
             }
 
-     res.render('grader', {grader: req.params.username,filename:pngName});
+     res.render('grader', {grader: userGlobal,filename:pngName});
 
         });
 
