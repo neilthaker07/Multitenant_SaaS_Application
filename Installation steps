@@ -10,3 +10,21 @@ deb http://cz.archive.ubuntu.com/ubuntu lucid main
 Then sudo apt-get update
 
 http://graphviz.org/Download_linux_ubuntu.php : Download link
+
+
+Install UMLParser
+
+1) wget http://www.spinellis.gr/umlgraph/UMLGraph-5.7_2.23-SNAPSHOT.tar.gz
+2) tar -xvzf UMLGraph-5.7_2.23-SNAPSHOT.tar.gz
+3) sudo cp lib/* /usr/local/lib
+4) sudo cp bin/umlgraph   /usr/local/bin
+5) cd /usr/local/bin
+  sudo nano umlgraph
+  Comment this line in the file 
+  UMLGRAPH_HOME
+6) cd /home/neil/
+7) export UMLGRAPH_HOME=/usr/local/lib
+8) source .bashrc
+
+To generate diagram run this command : where umlgraph1 is input java file and output will be png file with same name
+umlgraph umlgraph1 png
