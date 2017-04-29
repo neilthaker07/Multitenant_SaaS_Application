@@ -2,6 +2,8 @@ Graphviz for ubuntu:
 
 Add below lines in  /etc/apt/sources.list
 
+sudo apt-get install graphviz
+
 deb http://security.ubuntu.com/ubuntu lucid-security main 
 deb http://cz.archive.ubuntu.com/ubuntu lucid main 
 
