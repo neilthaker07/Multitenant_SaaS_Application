@@ -1,0 +1,10 @@
+Graphviz for ubuntu:
+
+Add below lines in  /etc/apt/sources.list
+
+deb http://security.ubuntu.com/ubuntu lucid-security main 
+deb http://cz.archive.ubuntu.com/ubuntu lucid main 
+
+Then sudo apt-get update
+
+http://graphviz.org/Download_linux_ubuntu.php : Download link
