@@ -11,6 +11,8 @@ Then sudo apt-get update
 
 http://graphviz.org/Download_linux_ubuntu.php : Download link
 
+To generate Output png image from 202 tenants jar file :
+java -jar  umlparser.jar /uploads output.png
 
 Install UMLParser
 
