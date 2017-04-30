@@ -1,44 +1,56 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-mongoose.connect('localhost:27017/test');
-var Schema = mongoose.Schema;
 var path = require('path');
 var formidable = require('formidable');
 var fs = require('fs');
 var exec = require('exec');
 
-var userDataSchema = new Schema({
-    username: {type: String, required:true},
-    password: String
-}, {collection: 'user-data'});
-
-var UserData = mongoose.model('UserData', userDataSchema);
-
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index');
+  res.render('index'); //index
 });
+
+router.post('/savefile', function(req, res, next) {
+    var textToSave = req.body.textarea;
+    fs.writeFile('/home/neil/Neil_Work/MS_SJSU/CT_281/final_personal_project/multitenant-app-281/multitenant/routes/example.seq', textToSave, function (err) {
+      if (err) {
+      }
+    });
+
+    exec('java -Dzanthan.prefs=diagram.preferences -jar /home/neil/Neil_Work/MS_SJSU/CT_281/final_personal_project/multitenant-app-281/multitenant/routes/sequence-10.0.jar --headless /home/neil/Neil_Work/MS_SJSU/CT_281/final_personal_project/multitenant-app-281/multitenant/routes/example.seq',
+        function (error, stdout, stderr) {
+            if (error !== null) {
+                console.log('exec error: ' + error);
+            }
+            res.redirect('/grader2/admin');
+        });
+
+/*    exec('sudo chmod 777 routes/example.png',
+        function (error, stdout, stderr) {
+            if (error !== null) {
+                console.log('exec error: ' + error);
+            }
+        });*/
+});
+
+router.get('/grader2/admin', function (req, res, next) {
+    res.render('grader', {grader: 'admin',filename:'/example.png'});
+});
+
+
 var userGlobal ;
 // login flow for grader
 router.post('/login', function(req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
 
-        // validate user login
-        var query = UserData.findOne({ 'username': username , 'password': password});
-        query.select('username');
-        query.exec(function (err, results) {
-            if (err) return handleError(err);
-            if (results == null)
-            {
-                res.redirect('/');
-            }
-            else
-            {
-                res.redirect('/grader/'+username);
-            }
-        });
+    if(username=='admin' && password=='admin'){
+        //res.redirect('281loadbalancer-1535719175.us-west-2.elb.amazonaws.com/sequence');
+        res.redirect('/grader/'+username);
+    }
+    else{
+        res.redirect('/');
+    }
 });
 
 router.get('/grader/:username', function (req, res, next) {
@@ -108,20 +120,24 @@ router.post('/uploading', function(req, res) {
 // execute uploaded file on instance and get output image
 router.post('/submit2',function (req, res, next) {
 
-    var fileName = imageProcess;
-    var fileWithoutExt = fileName.substring(0, fileName.lastIndexOf('.'));
-    var pngName= fileWithoutExt+".png";
-
-    exec('/home/neil/Neil_Work/MS_SJSU/CT_281/node_personal_project/multitenant-app-281/instance_execution/exe_script.sh /home/neil/Neil_Work/MS_SJSU/CT_281/node_personal_project/multitenant-app-281/multitenant/routes/uploads/'+fileName+' '+fileName+' '+pngName,
+    exec('unzip '+__dirname+'/uploads/test1.zip -d '+__dirname+'/uploads',
         function (error, stdout, stderr) {
             if (error !== null) {
                 console.log('exec error: ' + error);
             }
-
-     res.render('grader', {grader: userGlobal,filename:pngName});
-
         });
 
+    exec('java -jar '+__dirname+'/umlparser.jar '+__dirname+'/uploads '+__dirname+'/soutput.png',
+        function (error, stdout, stderr) {
+            if (error !== null) {
+                console.log('exec error: ' + error);
+            }
+            res.redirect('/grader3/admin');
+        });
+});
+
+router.get('/grader3/admin', function (req, res, next) {
+    res.render('grader', {grader: 'admin',filename:'/soutput.png'});
 });
 
 module.exports = router;

@@ -1,51 +1,35 @@
-<h1>Welcome Grader <%=grader%></h1>
-<h2>Select Tenant</h2>                             <!-- required left-->
-<form action="/submit2" method = "post">
-    <input type="radio" name="tenant" value="Bhakti" id="rb1" required> Bhakti<br>
-    <input type="radio" name="tenant" value="Shuzhong" id="rb2"> Shuzhong<br>
-    <input type="radio" name="tenant" value="Sequence" id="rb3"> Sequence<br>
-    <input type="radio" name="tenant" value="UML Graph" id="rb4"> UML<br>
-    <br>
+<h3>Change Tenant</h3>
+<a href="/"> SEQ </a>
+<a href="/grader/admin"> GRAPH </a>
+<br><br>
+<!--
 
-    <div id="fileUpload" style="display:none">Choose zip file
+<form action="/savefile" method = "post">
+    Insert Code Here <br>
+    <textarea name="textarea" rows="15" cols="35"></textarea><br>
+    <input id="btn-save" type="submit" value="Process Code" />
+</form>
+
+<img src= filename >
+-->
+
+<form action="/submit2" method = "post">
+
+    <div id="fileUpload">Choose zip file
+
         <button class="btn btn-lg upload-btn" style="display:none" type="button">Upload File</button>
         <input id="upload-input" type="file"  name="uploads[]" multiple="multiple"></div>
 
-    <div id="coding" style="display:none">Insert code<br/>
-        <textarea rows="25" cols="50"></textarea>
-    </div>
+    <br><button type="submit" id="diagramButton"> Get Diagram </button>
 
-    <br><button type="submit" id="diagramButton" onclick="getTextFun()"> Get Diagram </button>
-
-<h3> Output Diagram </h3>
-<img src="images/<%=filename%>" />
 </form>
+
+<img src= <%=filename%>>
 
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <script type = "text/javascript"
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script>
-    $(document).ready(function(){
-        $("#rb3").click(function(){
-            $("#fileUpload").hide();
-            $("#coding").show();
-        });
-        $("#rb4").click(function(){
-            $("#fileUpload").hide();
-            $("#coding").show();
-        });
-        $("#rb2").click(function(){
-            $("#fileUpload").show();
-            $("#coding").hide();
-        });
-        $("#rb1").click(function(){
-            $("#fileUpload").show();
-            $("#coding").hide();
-        });
-        $("#diagramButton").click(function(){
-            $("#diagram").show();
-        });
-    });
 
     $('.upload-btn').on('click', function (){
         $('#upload-input').click()
@@ -92,10 +76,5 @@
 
         }
     });
-
-    function getTextFun(){
-        var x = document.getElementById("coding").value;
-//        document.getElementById("demo").innerHTML = x;
-    }
 
 </script>
