@@ -25,6 +25,7 @@ Install UMLParser
 6) cd /home/neil/
 7) export UMLGRAPH_HOME=/usr/local/lib
 8) source .bashrc
+9) echo $UMLGRAPH_HOME
 
 To generate diagram run this command : where umlgraph1 is input java file and output will be png file with same name
 umlgraph umlgraph1 png
